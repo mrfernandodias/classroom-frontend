@@ -1,4 +1,4 @@
-export const DEPARTAMENTS = [
+export const DEPARTMENTS = [
   'CS',
   'Math',
   'English',
@@ -41,7 +41,7 @@ export const DEPARTAMENTS = [
   'Criminal Justice',
 ];
 
-export const DEPARTMENT_OPTIONS = DEPARTAMENTS.map((dept) => ({
+export const DEPARTMENT_OPTIONS = DEPARTMENTS.map((dept) => ({
   value: dept,
   label: dept,
 }));
