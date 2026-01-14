@@ -1,22 +1,30 @@
-import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
-import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
-import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
 
+import { Refine } from '@refinedev/core';
+import { DevtoolsPanel, DevtoolsProvider } from '@refinedev/devtools';
+import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 import routerProvider, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
-} from "@refinedev/react-router";
-import { BrowserRouter, Route, Routes } from "react-router";
-import "./App.css";
-import { Toaster } from "./components/refine-ui/notification/toaster";
-import { useNotificationProvider } from "./components/refine-ui/notification/use-notification-provider";
-import { ThemeProvider } from "./components/refine-ui/theme/theme-provider";
-import { dataProvider } from "./providers/data";
+} from '@refinedev/react-router';
+
+import { BookOpen, Home } from 'lucide-react';
+
+import { Layout } from '@/components/refine-ui/layout/layout.tsx';
+
+import Dashboard from '@/pages/dashboard.tsx';
+import SubjectsCreate from '@/pages/subjects/create.tsx';
+import SubjectsList from '@/pages/subjects/list.tsx';
+
+import './App.css';
+import { Toaster } from './components/refine-ui/notification/toaster';
+import { useNotificationProvider } from './components/refine-ui/notification/use-notification-provider';
+import { ThemeProvider } from './components/refine-ui/theme/theme-provider';
+import { dataProvider } from './providers/data';
 
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ThemeProvider>
           <DevtoolsProvider>
@@ -27,11 +35,38 @@ function App() {
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
-                projectId: "d121sx-PerQDj-HfdddJ",
+                projectId: 'd121sx-PerQDj-HfdddJ',
               }}
+              resources={[
+                {
+                  name: 'dashboard',
+                  list: '/',
+                  meta: { label: 'Home', icon: <Home /> },
+                },
+                {
+                  name: 'subjects',
+                  list: '/subjects',
+                  create: '/subjects/create',
+                  edit: '/subjects/:id/edit',
+                  show: '/subjects/:id',
+                  meta: { label: 'Subjects', icon: <BookOpen /> },
+                },
+              ]}
             >
               <Routes>
-                <Route index element={<WelcomePage />} />
+                <Route
+                  element={
+                    <Layout>
+                      <Outlet />
+                    </Layout>
+                  }
+                >
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="subjects">
+                    <Route index element={<SubjectsList />} />
+                    <Route path="create" element={<SubjectsCreate />} />
+                  </Route>
+                </Route>
               </Routes>
               <Toaster />
               <RefineKbar />

@@ -1,26 +1,24 @@
-"use client";
+'use client';
 
-import { RefreshButton } from "@/components/refine-ui/buttons/refresh";
-import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import {
-  useBack,
-  useResourceParams,
-  useUserFriendlyName,
-} from "@refinedev/core";
-import { ArrowLeftIcon } from "lucide-react";
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from 'react';
+
+import { useBack, useResourceParams, useUserFriendlyName } from '@refinedev/core';
+
+import { ArrowLeftIcon } from 'lucide-react';
+
+import { RefreshButton } from '@/components/refine-ui/buttons/refresh';
+import { Breadcrumb } from '@/components/refine-ui/layout/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+import { cn } from '@/lib/utils';
 
 type EditViewProps = PropsWithChildren<{
   className?: string;
 }>;
 
 export function EditView({ children, className }: EditViewProps) {
-  return (
-    <div className={cn("flex flex-col", "gap-4", className)}>{children}</div>
-  );
+  return <div className={cn('flex flex-col', 'gap-4', className)}>{children}</div>;
 }
 
 type EditViewHeaderProps = PropsWithChildren<{
@@ -51,26 +49,23 @@ export const EditViewHeader = ({
 
   const title =
     titleFromProps ??
-    getUserFriendlyName(
-      resource?.meta?.label ?? identifier ?? resource?.name,
-      "plural"
-    );
+    getUserFriendlyName(resource?.meta?.label ?? identifier ?? resource?.name, 'plural');
 
   return (
-    <div className={cn("flex flex-col", "gap-4", wrapperClassName)}>
+    <div className={cn('flex flex-col', 'gap-4', wrapperClassName)}>
       <div className="flex items-center relative gap-2">
         <div className="bg-background z-[2] pr-4">
           <Breadcrumb />
         </div>
-        <Separator className={cn("absolute", "left-0", "right-0", "z-[1]")} />
+        <Separator className={cn('absolute', 'left-0', 'right-0', 'z-[1]')} />
       </div>
       <div
         className={cn(
-          "flex",
-          "gap-1",
-          "items-center",
-          "justify-between",
-          "-ml-2.5",
+          'flex',
+          'gap-1',
+          'items-center',
+          'justify-between',
+          '-ml-2.5',
           headerClassName
         )}
       >
@@ -83,15 +78,11 @@ export const EditViewHeader = ({
 
         <div className="flex items-center gap-2">
           {actionsSlot}
-          <RefreshButton
-            variant="outline"
-            recordItemId={recordItemId}
-            resource={resourceName}
-          />
+          <RefreshButton variant="outline" recordItemId={recordItemId} resource={resourceName} />
         </div>
       </div>
     </div>
   );
 };
 
-EditView.displayName = "EditView";
+EditView.displayName = 'EditView';
